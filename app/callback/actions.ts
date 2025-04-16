@@ -16,16 +16,19 @@ export async function getCredentialsAndSaveToCookie(code: string): Promise<{ suc
     try {
         const cookieStore = await cookies();
         cookieStore.set('SaaSusIdToken', idToken, {
-            // httpOnly: true,
-            // sameSite: 'strict',
+            httpOnly: true,
+            sameSite: 'strict',
+            path: '/',
         });
         cookieStore.set('SaaSusAccessToken', accessToken, {
-            // httpOnly: true,
-            // sameSite: 'strict',
+            httpOnly: true,
+            sameSite: 'strict',
+            path: '/',
         });
         cookieStore.set('SaaSusRefreshToken', refreshToken!, {
-            // httpOnly: true,
-            // sameSite: 'strict',
+            httpOnly: true,
+            sameSite: 'strict',
+            path: '/',
         });
     } catch (e) {
         console.log(e)
