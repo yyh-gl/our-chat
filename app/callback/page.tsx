@@ -23,10 +23,13 @@ export default function CallbackPage() {
                 setSuccess(result.success)
             }
         })()
-    }, [router, searchParams, success]);
+    }, [searchParams]);
 
-    if (success) {
-        return router.replace('/');
-    }
+    useEffect(() => {
+        if (success) {
+            router.replace('/');
+        }
+    }, [success]);
+
     return <div>Processing authentication...</div>;
 }
