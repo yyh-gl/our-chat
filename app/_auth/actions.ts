@@ -1,10 +1,16 @@
 'use server';
 
-import {AuthClient} from "saasus-sdk";
+import {AuthClient,} from "saasus-sdk";
 import {cookies} from "next/headers";
+import {UserInfo} from "saasus-sdk/dist/generated/Auth";
 
-export async function getCredentialsAndSaveToCookie(code: string): Promise<{ success: boolean }> {
-    const authClient = new AuthClient();
+const authClient = new AuthClient();
+
+type AuthActionResult = {
+    success: boolean
+}
+
+export async function authenticateByTmpCode(code: string): Promise<AuthActionResult> {
     const res = await authClient.credentialApi.getAuthCredentials(code, 'tempCodeAuth');
     const idToken = res.data.id_token
     const accessToken = res.data.access_token;
@@ -36,4 +42,20 @@ export async function getCredentialsAndSaveToCookie(code: string): Promise<{ suc
     }
 
     return {success: true};
+}
+
+export async function getAuthenticatedUser(): Promise<UserInfo | undefined> {
+    const cookieStore = await cookies();
+    const idToken = cookieStore.get('SaaSusIdToken')?.value
+    if (!idToken) {
+        return undefined
+    }
+
+    try {
+        const response = await authClient.userInfoApi.getUserInfo(idToken, {})
+        return response.data
+    } catch (e) {
+        console.log(e)
+        return undefined
+    }
 }
