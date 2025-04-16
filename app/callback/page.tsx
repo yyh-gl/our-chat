@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
-import {getCredentialsAndSaveToCookie} from './actions'
+import {authenticateByTmpCode} from "@/app/_auth/actions";
 
 export default function CallbackPage() {
     const router = useRouter();
@@ -18,7 +18,7 @@ export default function CallbackPage() {
         }
 
         (async () => {
-            const result = await getCredentialsAndSaveToCookie(code)
+            const result = await authenticateByTmpCode(code)
             if (result.success) {
                 setSuccess(result.success)
             }
