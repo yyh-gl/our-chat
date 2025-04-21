@@ -1,6 +1,4 @@
 import Link from "next/link";
-import {getAuthenticatedUser} from "@/app/_auth/actions";
-import {redirect} from "next/navigation";
 
 // Chat room type definition
 interface ChatRoom {
@@ -11,11 +9,6 @@ interface ChatRoom {
 }
 
 export default async function Home() {
-    const user = await getAuthenticatedUser()
-    if (!user) {
-        redirect(process.env.SAASUS_LOGIN_URL || '')
-    }
-
     // TODO: Fetch chat rooms from Supabase
     // Example implementation:
     // const { data: chatRooms, error } = await supabase

@@ -1,8 +1,7 @@
 'use server';
 
-import {AuthClient,} from "saasus-sdk";
+import {AuthClient} from "saasus-sdk";
 import {cookies} from "next/headers";
-import {UserInfo} from "saasus-sdk/dist/generated/Auth";
 
 const authClient = new AuthClient();
 
@@ -42,20 +41,4 @@ export async function authenticateByTmpCode(code: string): Promise<AuthActionRes
     }
 
     return {success: true};
-}
-
-export async function getAuthenticatedUser(): Promise<UserInfo | undefined> {
-    const cookieStore = await cookies();
-    const idToken = cookieStore.get('SaaSusIdToken')?.value
-    if (!idToken) {
-        return undefined
-    }
-
-    try {
-        const response = await authClient.userInfoApi.getUserInfo(idToken, {})
-        return response.data
-    } catch (e) {
-        console.log(e)
-        return undefined
-    }
 }
