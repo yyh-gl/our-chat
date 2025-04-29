@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {getChats} from "@/app/_chats/actions";
+import {getOwnChats} from "@/app/_chats/actions";
 
 // Chat room type definition
 interface Chat {
@@ -8,7 +8,7 @@ interface Chat {
 }
 
 export default async function Home() {
-    const chats = await getChats('e129ddeb-60a2-4f8c-9346-e2c8c992f33b')
+    const chats = await getOwnChats()
 
     return (
         <div className="container mx-auto px-4 py-8">
