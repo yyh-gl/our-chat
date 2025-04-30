@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {getOwnChats} from "@/app/_chats/actions";
+import {getOwnChats} from "@/app/chat/actions";
 
 // Chat room type definition
 interface Chat {
