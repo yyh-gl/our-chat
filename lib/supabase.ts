@@ -6,11 +6,12 @@ export const createSupabaseClient = async () => {
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
-    const data = {
+    const credentials = {
         email: process.env.NEXT_PUBLIC_SUPABASE_USER_EMAIL!,
         password: process.env.NEXT_PUBLIC_SUPABASE_USER_PASSWORD!,
     }
-    const {error} = await supabase.auth.signInWithPassword(data)
+    // const {data, error} = await supabase.auth.signInWithPassword(credentials)
+    const {error} = await supabase.auth.signInWithPassword(credentials)
     if (error) {
         console.log('Failed to log in to Supabase: ' + error);
     }
